@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Palindrome Checker</title>
+  </head>
+  <body>
+    <input type="text" id="text-input" placeholder="Enter text" />
+    <button id="check-btn">Check</button>
+    <div id="result"></div>
+
+    <script>
+          const inputText = document.getElementById('text-input');
+          const btn = document.getElementById('check-btn');
+          const res = document.getElementById('result');
+
+          btn.addEventListener('click', function(){
+                    // Get the value and trim the whitespace.
+                    const inputVal = inputText.value;
+                    const inputValue = inputVal.trim();
+                    console.log(inputValue)
+                    console.log(palindromeChecker(inputValue))
+                    // Checking
+                    if(inputValue === ""){
+                              alert("Please input a value");
+                    }
+                    
+                    // Passing the inputValue to palindromeChecker function.
+                    if(palindromeChecker(inputValue)){
+                              res.innerText = `${inputValue} is a palindrome`;
+                    }
+                    else{
+                              res.innerText = `${inputValue} is not a palindrome`;
+                    }
+
+          })
+
+          const palindromeChecker = (str) =>{
+                    // Remove non-alphanumeric characters and convert to lowercase 
+                    const clearStr = str.replace(/[^A-Za-z0-9]/g, '').toLowerCase();
+
+                    // Compare the string with its reverse (true || false)
+                    return clearStr === clearStr.split('').reverse().join('');
+                    // In JavaScript, the split() method is used to split a string into an array of substrings based on a specified separator and then returns the array. When you call split() without passing any arguments, it splits the string into an array of substrings based on any whitespace characters (spaces, tabs, newlines)
+          }
+    </script>
+  </body>
+</html>
