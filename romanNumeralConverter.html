@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Roman Numeral Converter</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <input type="number" id="number" placeholder="Enter a number" />
+    <button id="convert-btn">Convert</button>
+    <div id="output"></div>
+
+    <script>
+      const num = document.getElementById("number");
+      const btn = document.getElementById("convert-btn");
+      const res = document.getElementById("output");
+
+      // Create a dictionary to map decimal numbers to their Roman numeral symbols
+      const romanDict = {
+        1000: "M",
+        900: "CM",
+        500: "D",
+        400: "CD",
+        100: "C",
+        90: "XC",
+        50: "L",
+        40: "XL",
+        10: "X",
+        9: "IX",
+        5: "V",
+        4: "IV",
+        1: "I",
+      };
+      // Iterate through the dictionary keys in descending order
+      const keys = Object.keys(romanDict).sort((a, b) => b - a);
+
+      btn.addEventListener("click", function () {
+        res.value = "";
+        const inputVal = num.value.trim();
+
+        if (inputVal === "") {
+          res.textContent = "Please enter a valid number";
+        } else if (inputVal < 1) {
+          res.textContent = "Please enter a number greater than or equal to 1";
+        } else if (inputVal > 3999) {
+          res.textContent = "Please enter a number less than or equal to 3999";
+        } else {
+          getRoman(inputVal);
+        }
+      });
+
+      const getRoman = (num) => {
+        let roman = "";
+        for (const key of keys) {
+          // Determine how many times the current decimal value can be subtracted
+          const count = Math.floor(num / key);
+
+          // Append the corresponding Roman numeral symbol to the result string
+          roman += romanDict[key].repeat(count);
+
+          // Subtract the decimal value from the input number
+          num -= key * count;
+        }
+
+        // Putting the resulting Roman numeral string into result/
+        res.textContent = roman;
+      };
+    </script>
+  </body>
+</html>
