@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Phone Number Validator</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <input type="text" id="user-input" placeholder="Enter phone number" />
+    <button id="check-btn">Check</button>
+    <button id="clear-btn">Clear</button>
+    <div id="results-div"></div>
+
+    <script>
+      const userInput = document.getElementById("user-input");
+      const checkBtn = document.getElementById("check-btn");
+      const clearBtn = document.getElementById("clear-btn");
+      const resultsDiv = document.getElementById("results-div");
+
+      // Function to validate the phone number format
+      const checkValidNumber = (input) => {
+        if (input === "") {
+          alert("Please provide a phone number");
+          return;
+        }
+        // Regular expression for validating US phone numbers
+        const countryCode = "^(1\\s?)?";
+        const areaCode = "(\\([0-9]{3}\\)|[0-9]{3})";
+        const spacesDashes = "[\\s\\-]?";
+        const phoneNumber = "[0-9]{3}[\\s\\-]?[0-9]{4}$";
+        const phoneRegex = new RegExp(
+          `${countryCode}${areaCode}${spacesDashes}${phoneNumber}`
+        );
+        const pTag = document.createElement("p");
+        pTag.className = "results-text";
+        phoneRegex.test(input)
+          ? (pTag.style.color = "#00471b")
+          : (pTag.style.color = "#4d3800");
+        pTag.appendChild(
+          document.createTextNode(
+            `${
+              phoneRegex.test(input) ? "Valid" : "Invalid"
+            } US number: ${input}`
+          )
+        );
+        resultsDiv.appendChild(pTag);
+      };
+
+      // Event listener for the check button
+      checkBtn.addEventListener("click", () => {
+        checkValidNumber(userInput.value);
+        userInput.value = "";
+      });
+
+      userInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          checkValidNumber(userInput.value);
+          userInput.value = "";
+        }
+      });
+
+      // Event listener for the clear button
+      clearBtn.addEventListener("click", () => {
+        resultsDiv.textContent = "";
+      });
+    </script>
+  </body>
+</html>
